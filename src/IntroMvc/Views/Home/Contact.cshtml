@@ -1,0 +1,22 @@
+﻿@using System.Dynamic
+@inject IGreetingProvider GreetingProvider
+@{
+    /*
+     * Author: Niki
+     */
+    // set title
+    ViewData["Title"] = "Contact";
+    var htmlData = "<u>Hello</u>";
+    StringBuilder sb = new StringBuilder();
+}
+
+@using System.Text;
+<h1>@Html.Raw(htmlData)</h1>
+<!-- Start menu -->
+<!-- End menu -->
+@foreach (var item in (ViewData))
+{
+    <h1>@item.Key -> @item.Value</h1>
+}
+@*<h1>a@(DateTime.Now)</h1>
+<h1>@(DateTime.UtcNow.Year * (1 + 1))</h1>*@

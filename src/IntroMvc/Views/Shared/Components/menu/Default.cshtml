@@ -1,0 +1,5 @@
+﻿@model List<IntroMvc.Components.MenuItemViewModel>
+@foreach (var menuItem in Model)
+{
+    <li><a href="@menuItem.Url">@menuItem.Title</a></li>
+}

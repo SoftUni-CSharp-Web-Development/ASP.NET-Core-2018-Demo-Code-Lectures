@@ -1,0 +1,31 @@
+﻿@model IntroMvc.ViewModels.Home.IndexViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1 asp-name="Niki"></h1>
+<h2 asp-name="Niki"></h2>
+
+@this.Model.Message
+@ViewBag.Name
+@Context.Request.Headers["User-Agent"]
+<h2>@ViewData["UsersCount"]!!!</h2>
+
+
+@using (Html.BeginForm("GetByUsername", "Home", FormMethod.Get))
+{
+    @Html.TextBox("username", "niki", new { @class = "form-control" })
+    <input type="submit" value="Get" class="form-control" />
+}
+
+<script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.3.1.min.js"
+        asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+        asp-fallback-test="window.jQuery"
+        crossorigin="anonymous"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
+</script>
+
+<div id="dynamicContent"></div>
+
+
+<partial name="DateType/_DateTimePartial" model="@DateTime.UtcNow" />
