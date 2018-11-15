@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IntroMvc.Data;
+using IntroMvc.Filter;
 using IntroMvc.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
@@ -48,16 +49,25 @@ namespace IntroMvc
                     options.Password.RequireUppercase = false;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            
+            services.AddMvc(
+                options =>
+                {
+                    // options.Filters.Add(new AddHeaderActionFilter());
+                }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Application services
             services.AddScoped<IGreetingProvider, GreetingProvider>();
             services.AddScoped<IUsersService, UsersService>();
+            services.AddScoped<CounterService>();
+            services.AddSingleton<MyResourceFilter>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        // Global.asax -> Application_Start, Application_Error
+        public void Configure(
+            IApplicationBuilder app,
+            IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -70,7 +80,7 @@ namespace IntroMvc
                 app.UseHsts();
             }
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();

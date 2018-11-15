@@ -22,9 +22,6 @@ namespace IntroMvc.Services
 
         public string GetGreeting()
         {
-            {
-
-            }
             return this.configuration["Greeting"];
         }
     }

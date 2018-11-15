@@ -1,15 +1,14 @@
 ﻿@model IntroMvc.ViewModels.Home.IndexViewModel
+@inject CounterService CounterService
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<h1 asp-name="Niki"></h1>
-<h2 asp-name="Niki"></h2>
 
 @this.Model.Message
 @ViewBag.Name
 @Context.Request.Headers["User-Agent"]
 <h2>@ViewData["UsersCount"]!!!</h2>
+<h3>@CounterService.GetCount()</h3>
 
 
 @using (Html.BeginForm("GetByUsername", "Home", FormMethod.Get))

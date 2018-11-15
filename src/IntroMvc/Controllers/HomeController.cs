@@ -4,27 +4,41 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using IntroMvc.Data;
+using IntroMvc.Filter;
 using Microsoft.AspNetCore.Mvc;
 using IntroMvc.Models;
 using IntroMvc.Services;
 using IntroMvc.ViewModels.Home;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace IntroMvc.Controllers
 {
+    [AddHeaderActionFilter]
     public class HomeController : BaseController
     {
         private readonly IGreetingProvider configuration;
         private readonly IUsersService usersService;
+        private readonly IHostingEnvironment env;
+        private readonly CounterService counterService;
+        private readonly ILogger<HomeController> logger;
 
         public HomeController(
             IGreetingProvider configuration,
-            IUsersService usersService)
+            IUsersService usersService,
+            IHostingEnvironment env,
+            CounterService counterService,
+            ILogger<HomeController> logger)
         {
             this.configuration = configuration;
             this.usersService = usersService;
+            this.env = env;
+            this.counterService = counterService;
+            this.logger = logger;
         }
 
         public IActionResult GetByUsername(string username)
@@ -32,8 +46,15 @@ namespace IntroMvc.Controllers
             return this.Content(username);
         }
 
+        [MyAuthorizeFilter]
+        [MyExceptionFilter]
+        [MyResultFilter]
+        [TypeFilter(typeof(MyResourceFilter))]
+        [AddHeaderActionFilter]
         public IActionResult Index(int id)
         {
+            // throw new Exception();
+            this.logger.LogWarning($"Invalid id: {id}");
             ViewBag.Name = "Niki";
             ViewData["HI"] = this.configuration.GetGreeting() + ", " + this.User.Identity.Name;
             ViewData["UsersCount"] = this.usersService.Count();
