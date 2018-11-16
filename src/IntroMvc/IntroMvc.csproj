@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administrator\Models\" />
+    <Folder Include="wwwroot\files\0\" />
   </ItemGroup>
 
   <ItemGroup>

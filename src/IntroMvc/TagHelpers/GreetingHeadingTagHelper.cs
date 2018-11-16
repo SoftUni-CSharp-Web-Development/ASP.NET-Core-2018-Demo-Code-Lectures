@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace IntroMvc.TagHelpers
 {
-    [HtmlTargetElement("h1")]
-    [HtmlTargetElement("h2")]
+    [HtmlTargetElement("h1", Attributes = "asp-name")]
+    [HtmlTargetElement("h2", Attributes = "asp-name")]
     public class GreetingHeadingTagHelper : TagHelper
     {
         private readonly IGreetingProvider greetingProvider;

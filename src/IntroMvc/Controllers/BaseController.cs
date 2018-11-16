@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace IntroMvc.Controllers
 {
-
     public class BaseController : Controller
     {
     }

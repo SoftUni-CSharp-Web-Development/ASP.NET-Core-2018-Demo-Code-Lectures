@@ -1,0 +1,63 @@
+﻿@using IntroMvc.ViewModels.Students
+@model StudentBindingModel
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Create" method="post"
+      enctype="multipart/form-data">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="Name.FirstName"></label>
+        <input asp-for="Name.FirstName" class="form-control"/>
+        <span asp-validation-for="Name.FirstName"></span>
+    </div>
+    <div>
+        <label asp-for="Name.LastName"></label>
+        <input asp-for="Name.LastName" class="form-control" />
+        <span asp-validation-for="Name.LastName"></span>
+    </div>
+
+    <div>
+        <label asp-for="Bio"></label>
+        <textarea asp-for="Bio" class="form-control"></textarea>
+    </div>
+
+    <div>
+        <label asp-for="BirthDay"></label>
+        <input asp-for="BirthDay" class="form-control"/>
+        <span asp-validation-for="BirthDay"></span>
+    </div>
+
+    <div>
+        <label asp-for="CoursesTaken"></label>
+        <input asp-for="CoursesTaken" class="form-control"/>
+    </div>
+
+    <div>
+        <label asp-for="Image"></label>
+        <input type="file" asp-for="Image" />
+    </div>
+
+    <div>
+        <label asp-for="Type"></label>
+        <select asp-for="Type"
+                asp-items="@(Html.GetEnumSelectList<StudentType>())"
+                class="form-control">
+        </select>
+
+        @*<input type="radio" asp-for="Type" value="Onsite" />
+        <input type="radio" asp-for="Type" value="Online" />
+        <input type="radio" asp-for="Type" value="Fake" />*@
+    </div>
+
+    <input type="submit" value="Create student"/>
+</form>
+
+
+@section Scripts
+{
+    <partial name="_ValidationScriptsPartial" />
+}

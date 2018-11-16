@@ -11,10 +11,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using IntroMvc.Data;
 using IntroMvc.Filter;
+using IntroMvc.ModelBinders;
 using IntroMvc.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 
 namespace IntroMvc
 {
@@ -53,7 +57,10 @@ namespace IntroMvc
             services.AddMvc(
                 options =>
                 {
+                   
+                    // options.ModelBinderProviders.Insert(0, new DoNotUseModelBinderProvider());
                     // options.Filters.Add(new AddHeaderActionFilter());
+                    options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                 }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // Application services
@@ -61,6 +68,8 @@ namespace IntroMvc
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<CounterService>();
             services.AddSingleton<MyResourceFilter>();
+
+            services.AddSingleton<ILogger, ConsoleLogger>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
