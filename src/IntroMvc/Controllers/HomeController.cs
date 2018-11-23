@@ -9,12 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 using IntroMvc.Models;
 using IntroMvc.Services;
 using IntroMvc.ViewModels.Home;
+using IntroMvc.ViewModels.Students;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using IntroMvc.Extensions;
 
 namespace IntroMvc.Controllers
 {
@@ -53,6 +56,7 @@ namespace IntroMvc.Controllers
         [AddHeaderActionFilter]
         public IActionResult Index(int id)
         {
+            this.HttpContext.Session.SetString("VisitedHomePage", ";shdfhsk sdfshfksdj sdfjkshd sdf");
             // throw new Exception();
             this.logger.LogWarning($"Invalid id: {id}");
             ViewBag.Name = "Niki";
@@ -71,7 +75,7 @@ namespace IntroMvc.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = this.HttpContext.Session.GetString("VisitedHomePage");
 
             return View();
         }

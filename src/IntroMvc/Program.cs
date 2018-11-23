@@ -19,6 +19,8 @@ namespace IntroMvc
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
+                // .ConfigureLogging(options => { options.AddConsole().SetMinimumLevel(LogLevel.Warning); })
+                .UseKestrel(options => { options.AddServerHeader = false; })
                 .UseStartup<Startup>();
     }
 }

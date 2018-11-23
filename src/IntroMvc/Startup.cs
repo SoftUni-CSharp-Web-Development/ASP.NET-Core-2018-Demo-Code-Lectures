@@ -15,6 +15,7 @@ using IntroMvc.ModelBinders;
 using IntroMvc.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -58,6 +59,19 @@ namespace IntroMvc
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             
+            services.AddDistributedSqlServerCache(options =>
+                {
+                    options.ConnectionString = this.Configuration.GetConnectionString("DefaultConnection");
+                    options.SchemaName = "dbo";
+                    options.TableName = "CacheData";
+                });
+
+            services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.IdleTimeout = new TimeSpan(0, 4, 0, 0);
+            });
+
             services.AddMvc(
                 options =>
                 {
@@ -72,7 +86,7 @@ namespace IntroMvc
             services.AddScoped<IUsersService, UsersService>();
             services.AddScoped<CounterService>();
             services.AddSingleton<MyResourceFilter>();
-
+            services.AddResponseCompression(options => { options.EnableForHttps = true; });
             services.AddSingleton<ILogger, ConsoleLogger>();
         }
 
@@ -94,9 +108,11 @@ namespace IntroMvc
             }
 
             app.UseHttpsRedirection();
+            app.UseResponseCompression();
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

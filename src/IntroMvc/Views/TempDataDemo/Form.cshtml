@@ -1,0 +1,12 @@
+﻿@{
+    ViewData["Title"] = "Temp Data Form";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<form asp-action="Form" method="post">
+    <div>
+        <input name="data" class="form-control"/>
+    </div>
+    <input type="submit" value="Send"/>
+</form>

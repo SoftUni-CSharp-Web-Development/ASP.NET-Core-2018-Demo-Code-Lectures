@@ -1,0 +1,10 @@
+﻿@model DateTime
+@{
+    ViewData["Title"] = Model;
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<cache expires-after="@TimeSpan.FromHours(5)">
+    View cached: @DateTime.Now
+</cache>
