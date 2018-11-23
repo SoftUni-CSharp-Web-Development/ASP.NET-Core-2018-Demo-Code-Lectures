@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Console;
+using Microsoft.VisualStudio.Web.CodeGeneration.Utils.Messaging;
 
 namespace IntroMvc
 {
@@ -51,6 +52,9 @@ namespace IntroMvc
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
+                    options.User.RequireUniqueEmail = false;
+                    options.Lockout.MaxFailedAccessAttempts = 10;
+                    options.Lockout.DefaultLockoutTimeSpan = new TimeSpan(1, 0, 0, 0);
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             

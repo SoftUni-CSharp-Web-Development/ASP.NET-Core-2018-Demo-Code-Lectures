@@ -23,7 +23,7 @@ namespace IntroMvc.Filter
 
         public void OnResourceExecuted(ResourceExecutedContext context)
         {
-            this.logger.LogInformation($"OnResourceExecuting: {context.Result.GetType().Name}");
+            this.logger.LogInformation($"OnResourceExecuting: {context.Result?.GetType().Name}");
         }
     }
 }
